@@ -26,6 +26,12 @@ else
   include_recipe "riak::enterprise_package"
 end
 
+directory node['riak']['package']['config_dir'] do
+  owner "root"
+  mode 00755
+  action :create
+end
+
 file "#{node['riak']['package']['config_dir']}/app.config" do
   content Eth::Config.new(node['riak']['config'].to_hash).pp
   owner "root"
